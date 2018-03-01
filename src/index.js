@@ -157,11 +157,8 @@ class Movies extends React.Component {
 	clearActiveResult = () => this.setState({ activeResult: null });
 	render() {
 		const state = this.state;
-		// Important: there are high-pri (~sync) and low-pri versions of most of
-		// the state in this component. The high-pri ones will *immediately* trigger
-		// a timeout. The low-pri ones have a default timeout of ~5 seconds. High-pri
-		// is only for things that need to update quickly, like a text input. Anything
-		// that might cause the render to suspend should use the low-pri (async) values.
+		// WARNING: This is a temporary API because these
+		// features aren't exposed by React yet
 		return (
 			<AsyncValue
 				value={state}
