@@ -11,10 +11,10 @@ import { css } from "glamor";
 
 import { MasterDetail, Search, ResultView } from "./Layouts";
 import { AsyncValue } from "./AsyncValue";
-import { Placeholder } from "./Placeholder";
+import Placeholder from "./Placeholder";
 
 // use the Delay component to artificially slow queries down to see fallback UI
-import { Delay } from "./Delay";
+import Delay from "./Delay";
 
 // or as raw css
 css.insert(`
