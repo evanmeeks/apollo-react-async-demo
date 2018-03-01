@@ -157,8 +157,8 @@ class Movies extends React.Component {
 	clearActiveResult = () => this.setState({ activeResult: null });
 	render() {
 		const state = this.state;
-		// this is a temporary API because these features aren't exposed by
-		// React yet.
+		// WARNING: This is a temporary API because these
+		// features aren't exposed by React yet
 		return (
 			<AsyncValue
 				value={state}

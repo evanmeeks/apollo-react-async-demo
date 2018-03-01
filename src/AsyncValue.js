@@ -1,3 +1,6 @@
+// WARNING: This is a temporary API because these
+// features aren't exposed by React yet
+
 import React from "react";
 import ReactDOM from "react-dom";
 
