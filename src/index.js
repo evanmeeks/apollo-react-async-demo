@@ -11,10 +11,6 @@ import { css } from "glamor";
 
 import { MasterDetail, Search, ResultView } from "./Layouts";
 import { AsyncValue } from "./AsyncValue";
-import Placeholder from "./Placeholder";
-
-// use the Delay component to artificially slow queries down to see fallback UI
-import Delay from "./Delay";
 
 // or as raw css
 css.insert(`
@@ -22,10 +18,6 @@ css.insert(`
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
 `);
-
-function Loading() {
-	return <span css={{ animation: "spin 1s linear infinite" }}>🌀</span>;
-}
 
 const IMAGE_QUERY = gql`
 	query Config {
