@@ -11,6 +11,10 @@ import { css } from "glamor";
 
 import { MasterDetail, Search, ResultView } from "./Layouts";
 import { AsyncValue } from "./AsyncValue";
+import { Placeholder } from "./Placeholder";
+
+// use the Delay component to artificially slow queries down to see fallback UI
+import { Delay } from "./Delay";
 
 // or as raw css
 css.insert(`
@@ -19,7 +23,11 @@ css.insert(`
 }
 `);
 
-const CONFIG_QUERY = gql`
+function Loading() {
+	return <span css={{ animation: "spin 1s linear infinite" }}>🌀</span>;
+}
+
+const IMAGE_QUERY = gql`
 	query Config {
 		config {
 			images {
@@ -31,11 +39,13 @@ const CONFIG_QUERY = gql`
 	}
 `;
 
-const Result = props => (
-	<Query asyncMode query={CONFIG_QUERY}>
-		{({ data }) => <ResultView {...props} data={data} />}
-	</Query>
-);
+function Result(props) {
+	return (
+		<Query asyncMode query={IMAGE_QUERY}>
+			{({ data }) => <ResultView {...props} data={data} />}
+		</Query>
+	);
+}
 
 const SEARCH_QUERY = gql`
 	query GetMovies($query: String!) {
@@ -47,7 +57,7 @@ const SEARCH_QUERY = gql`
 	}
 `;
 
-const Results = ({ query, onActiveResultUpdate, activeResult }) => {
+function Results({ query, onActiveResultUpdate, activeResult }) {
 	if (query.trim() === "") return <h4>search for your favorite movie!</h4>;
 	return (
 		<Query asyncMode query={SEARCH_QUERY} variables={{ query }}>
@@ -69,14 +79,14 @@ const Results = ({ query, onActiveResultUpdate, activeResult }) => {
 			)}
 		</Query>
 	);
-};
+}
 
-const FullPoster = ({ movie }) => {
+function FullPoster({ movie }) {
 	const path = movie.poster_path;
 	if (path === null) return null;
 
 	return (
-		<Query asyncMode query={CONFIG_QUERY}>
+		<Query asyncMode query={IMAGE_QUERY}>
 			{({ data: { config } }) => {
 				const size = config.images.poster_sizes[2];
 				const baseURL =
@@ -89,7 +99,7 @@ const FullPoster = ({ movie }) => {
 			}}
 		</Query>
 	);
-};
+}
 
 const MOVIE_QUERY = gql`
 	query GetMovie($id: Int!) {
