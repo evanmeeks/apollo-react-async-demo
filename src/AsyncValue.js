@@ -3,16 +3,17 @@ import ReactDOM from "react-dom";
 
 export class AsyncValue extends React.Component {
 	state = { asyncValue: this.props.defaultValue };
-	componentDidMount() {
+	deferSetState(state) {
 		ReactDOM.unstable_deferredUpdates(() => {
-			this.setState((state, props) => ({ asyncValue: props.value }));
+			this.setState(state);
 		});
+	}
+	componentDidMount() {
+		this.deferSetState((state, props) => ({ asyncValue: props.value }));
 	}
 	componentDidUpdate() {
 		if (this.props.value !== this.state.asyncValue) {
-			ReactDOM.unstable_deferredUpdates(() => {
-				this.setState((state, props) => ({ asyncValue: props.value }));
-			});
+			this.deferSetState((state, props) => ({ asyncValue: props.value }));
 		}
 	}
 	render() {
